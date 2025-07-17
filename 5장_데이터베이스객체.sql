@@ -59,3 +59,30 @@ insert into USER6 values (SEQ_USER6.NEXTVAL, '신사임당', 'F', 27, '강릉시
 select * from user6;
 drop SEQUENCE SEQ_USER6;
 drop table user6;
+
+-- 실습하기 4-1
+// Oracle에서 내부 스크립트 실행이나 일반 사용자 생성을 가능하게 하기 위한 세션 설정
+alter session set "_ORACLE_SCRIPT"=true; 
+// 1234 비밀번호로 test1 유저 생성
+create user test1 identified by 1234; 
+
+-- 실습하기 4-2
+// 전체 사용자 조회
+select * from all_users;
+
+// 특정 사용자 조회
+select * from all_users where username='test1';
+
+-- 실습하기 4-3. 사용자 변경(SYSTEM 접속)
+// 사용자 비밀번호 변경
+ALTER USER test1 identified by 1111;
+
+// 사용자 삭제
+drop user test1;
+
+-- 실습하기 4-4. Role 부여
+// 접속 및 생성 권한 부여
+grant connect, resource to test1;
+
+// 테이블 스페이스(테이블 파일 생성 공간) 할당량 권한 부여
+grant unlimited tablespace to test1;
