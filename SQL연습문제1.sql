@@ -153,4 +153,5 @@ where ord_cid = 'c102';
 select ord_cid, name, pname, ord_date from orders a
 join customer b on a.ord_cid = b.cid
 join product c on a.ord_pno = c.pno
-where ord_date like '2022-07-03%';
+where substr(ord_date, 1, 10) = '2022-07-03';
+//where ord_date like '2022-07-03%';
