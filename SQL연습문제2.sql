@@ -135,7 +135,7 @@ select max(total_score) as 가장_큰_총점 from enrollment;
 select major, count(*) as 학생수 from student group by major;
 
 -- 실습 2-20
-select enr_csid, count(*) as 수강_학생수 from enrollment group by enr_csid having enr_csid = 3012;
+select enr_csid, count(*) as 수강_학생수 from enrollment group by enr_csid having count(*) >= 2;
 
 -- 실습 2-21
 select stdno, name, major, enr_csid, mid_score,
@@ -166,7 +166,7 @@ select
     avg(total_score) as 마케팅_전략_평균
 from enrollment e
 join course c on e.enr_csid = c.cs_id
-where enr_csid = 3012;
+where cs_name = '마케팅 전략';
 
 -- 실습 2-26
 select
