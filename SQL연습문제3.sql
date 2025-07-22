@@ -81,7 +81,7 @@ select * from account;
 select * from customer;
 
 -- 실습 3-6
-select * from transaction;
+select * from transaction where tr_type <> 0;
 
 -- 실습 3-7
 select c_name, c_id from customer;
@@ -106,7 +106,6 @@ select * from transaction where tr_type = 1;
 
 -- 실습 3-14
 select * from transaction where tr_type=2 order by tr_amount desc;
-select * from transaction;
 
 -- 실습 3-15
 select sum(tr_amount) as 임금총합, avg(tr_amount) as 임금평균
@@ -125,17 +124,162 @@ select * from account where acc_name = '자유저축예금'
 order by acc_balance desc fetch first 1 rows only;
 
 -- 실습 3-19
-select * from transaction
+select * from transaction where tr_type in (1, 2)
 order by tr_type, tr_amount desc;
 
 -- 실습 3-20
+select 
+    count(case when tr_type = 0 then 1 end) as "조회 건수",
+    count(case when tr_type = 1 then 1 end) as "입금 건수",
+    count(case when tr_type = 2 then 1 end) as "출금 건수"
+from
+    transaction;
+
 -- 실습 3-21
+select
+    tr_type,
+    case
+        when(tr_type = 0) then '조회'
+        when(tr_type = 1) then '입금'
+        when(tr_type = 2) then '출금'
+    end as "거래종류",
+    tr_acc,
+    tr_amount
+from transaction;
+
 -- 실습 3-22
+select
+    tr_type,
+    count(tr_no)
+from transaction group by tr_type
+order by tr_type;
+
 -- 실습 3-23
+select
+    tr_acc,
+    tr_type,
+    sum(tr_amount) as 합계
+from transaction
+where tr_type = 1
+group by tr_acc, tr_type
+having sum(tr_amount) >= 100000
+order by 합계 desc;
+
 -- 실습 3-24
+select
+    tr_acc,
+    count(*) as 거래건수,
+    sum(tr_amount) as 총거래금액
+from transaction
+where tr_type in (1, 2)
+group by tr_acc, tr_type
+having sum(tr_amount) >= 100000
+order by 총거래금액 desc
+offset 1 rows fetch next 2 rows only;
+
 -- 실습 3-25
+select
+    acc_no,
+    acc_name,
+    c_id,
+    c_name,
+    acc_balance,
+    acc_date
+from account a
+join customer c
+on a.acc_cid = c.c_id;
+
 -- 실습 3-26
+select
+    acc_no,
+    acc_name,
+    c_id,
+    c_name,
+    acc_balance,
+    acc_date
+from account a
+join customer c
+on a.acc_cid = c.c_id
+where acc_balance >= 1000000
+order by acc_balance desc;
+
 -- 실습 3-27
+select
+    tr_no,
+    tr_acc,
+    acc_cid,
+    tr_type,
+    tr_amount,
+    tr_date
+from account a
+join transaction t
+on a.acc_no = t.tr_acc;
+
 -- 실습 3-28
+select
+    a.acc_no,
+    c.c_name,
+    sum(case when t.tr_type = 1 then t.tr_amount else 0 end) as 총입금액,
+    sum(case when t.tr_type = 2 then t.tr_amount else 0 end) as 총출금액
+from transaction t
+right join
+    account a on t.tr_acc = a.acc_no
+    join customer c on a.acc_cid = c.c_id
+where c.c_type = 1
+group by a.acc_no, c.c_name;
+
 -- 실습 3-29
+SELECT
+ a.ACC_NO,
+ a.ACC_CID,
+ a.ACC_NAME,
+ c.C_NAME,
+ a.ACC_BALANCE + 
+SUM(CASE WHEN t.TR_TYPE = 001 THEN t.TR_AMOUNT ELSE 0 END) - 
+SUM(CASE WHEN t.TR_TYPE = 002 THEN t.TR_AMOUNT ELSE 0 END) AS 최종잔액
+FROM 
+ACCOUNT a
+ LEFT JOIN 
+TRANSACTION t ON a.ACC_NO = t.TR_ACC
+ JOIN 
+CUSTOMER c ON a.ACC_CID = c.C_ID 
+WHERE 
+C_TYPE = 1 
+GROUP BY
+ a.ACC_NO, 
+a.ACC_CID, 
+a.ACC_NAME, 
+a.ACC_BALANCE, 
+c.C_NAME
+ ORDER BY
+ a.ACC_NO;
 -- 실습 3-30
+ SELECT
+ c.C_NAME,
+ a.ACC_NO,
+ t.TOTAL_DEPOSIT,
+ c.C_ADDR
+ FROM
+ ACCOUNT a
+ JOIN CUSTOMER c ON a.ACC_CID = c.C_ID
+ JOIN (
+ SELECT
+ TR_ACC,
+ SUM(TR_AMOUNT) AS TOTAL_DEPOSIT
+ FROM TRANSACTION
+ WHERE TR_TYPE = 1
+ GROUP BY TR_ACC
+ ) t ON a.ACC_NO = t.TR_ACC
+ WHERE
+ t.TOTAL_DEPOSIT = (
+ SELECT
+ MAX(SUM_AMOUNT)
+ FROM (
+ SELECT
+ TR_ACC,
+ SUM(TR_AMOUNT) AS SUM_AMOUNT
+ FROM TRANSACTION
+ WHERE TR_TYPE = 1
+ GROUP BY TR_ACC
+ )
+ );
