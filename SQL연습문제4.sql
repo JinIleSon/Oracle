@@ -96,6 +96,8 @@ select member_id, name, hp from member where member_id = 1002;
 
 -- 실습 4-10
 select title from book where reg_date like '2014-03%';
+//select title from book where substr(reg_date, 1, 7) = '2014-03';
+//select title from book where reg_date between '2014-03-01' and '2014-03-31';
 
 -- 실습 4-11
 select title, author, publisher from book where publisher = '민음사';
@@ -108,6 +110,7 @@ select * from member where name like '김%';
 
 -- 실습 4-14
 select name, address from member where address like '부산%' or address like '대구%';
+// select name, address from member where substr(address, 1, 2) in ('부산', '대구');
 
 -- 실습 4-15
 select book_id, title from book where book_id in (10003, 10006);
@@ -119,7 +122,7 @@ select title, author from book where author in ('조정래', '박경리');
 select name, join_date from member where join_date < '2024-04-01';
 
 -- 실습 4-18
-select loan_id, member_id, book_id, loan_date from loan where loan_date >= '2024-05-01';
+select loan_id, member_id, book_id, loan_date from loan where loan_date > '2024-05-01';
 
 -- 실습 4-19
 select title, author, publisher from book where available = 'N';
@@ -177,7 +180,7 @@ select book_id, count(*) as 도서_대출건수 from loan group by book_id havin
 
 -- 실습 4-37
 select
-    m.member_id,
+    l.member_id,
     m.name,
     l.book_id,
     b.title,
@@ -263,7 +266,7 @@ select
      b.title
 from book b
 left join loan l on b.book_id = l.book_id
-where loan_date is null;
+where loan_id is null;
 
 -- 실습 4-47
 select
@@ -275,24 +278,28 @@ join member m on l.member_id = m.member_id
 group by name order by count(*) desc;
 
 -- 실습 4-48
-select
-     name
-from book b
-join loan l on b.book_id = l.book_id
-join member m on l.member_id = m.member_id
-group by name order by count(*) desc
-fetch first 1 rows only;
+select 
+    name
+from member
+where member_id=(
+select member_id
+from loan 
+group by member_id 
+order by count(*) desc
+fetch first 1 rows only
+);
 
 -- 실습 4-49
 select
     title
 from book 
-where publisher in 
+where publisher = 
 (select publisher from book where title = '데이터베이스') and title != '데이터베이스';
 
 -- 실습 4-50
 select
     name
-from member m
-join loan l on m.member_id = l.member_id
-where book_id = 10004;
+from member
+where member_id in (
+    select member_id from loan where book_id = 10004
+);
