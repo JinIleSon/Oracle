@@ -336,4 +336,27 @@ select s.sellerno, company, manager, tel
       
 --문제9. 모든 주문상세내역 중 개별 상품 가격과 개수 그리고 할인율이 적용된 가격을 구하고 그 가격으로
 --       주문별 총합을 구해서 주문별 총합이 10만원이상 그리고 큰 금액 순으로 주문번호, 최종총합을 조회하시오. 
-select asdf
+select orderno,
+       sum(할인가 * itemcount)
+       from ( select
+       orderno,
+       itemcount,
+       itemprice * ((100-itemdiscount)/100) as 할인가
+       from ordersitem
+       ) 
+       group by orderno
+       having sum(할인가 * itemcount) >= 100000
+       order by sum(할인가 * itemcount) desc;
+       
+-- 문제10. 장보고 고객이 주문했던 모든 상품명을 `고객명`, `상품명`으로 조회하시오.
+-- 단 상품명은 중복 안됨, 상품명은 구분자 , 로 나열
+select u.name, 
+       listagg(distinct p.prodname, ',') within group(order by p.prodname)
+       from orders o join "User" u
+       on o.userid = u.userid
+       join ordersitem i
+       on i.orderno = o.orderno
+       join product p
+       on i.prodno = p.prodno
+       where u.name = '장보고'
+       group by u.name;
