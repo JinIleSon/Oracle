@@ -1,0 +1,104 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6DCEBB97-FE64-58A9-F33F-39EF6E37F8D9" name="Orders">
+<createdBy>GGG</createdBy>
+<createdTime>2025-08-11 06:16:20 UTC</createdTime>
+<ownerDesignName>ShoppingProject</ownerDesignName>
+<ordsAlias>table_6</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="orderNo" id="78A88FA2-0AAF-9BC6-5E8F-EF7CC30A8C22">
+<createdBy>GGG</createdBy>
+<createdTime>2025-08-11 06:32:03 UTC</createdTime>
+<ownerDesignName>ShoppingProject</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>11 BYTE</dataTypeSize>
+<ownDataTypeParameters>11 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="userId" id="570A5D72-C757-FD1E-E02E-12A9CFE386C3">
+<createdBy>GGG</createdBy>
+<createdTime>2025-08-11 06:33:28 UTC</createdTime>
+<ownerDesignName>ShoppingProject</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A9C8E44B-3DF1-9036-15D7-3731A6D6973D" referredColumn="58C70D8E-4DD1-C36B-69D0-A30E306DE59D"/>
+</associations>
+</Column>
+<Column name="orderTotalPrice" id="6912BA60-35B3-83CC-E61F-54F43424A5CF">
+<createdBy>GGG</createdBy>
+<createdTime>2025-08-11 06:32:03 UTC</createdTime>
+<ownerDesignName>ShoppingProject</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="orderAddress" id="EC59EB2E-AADF-EF9F-DB92-58D609D9A144">
+<createdBy>GGG</createdBy>
+<createdTime>2025-08-11 06:32:03 UTC</createdTime>
+<ownerDesignName>ShoppingProject</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="orderStatus" id="BCA048A4-80D5-8CE7-D3CF-03C32CF9CF4A">
+<createdBy>GGG</createdBy>
+<createdTime>2025-08-11 06:32:03 UTC</createdTime>
+<ownerDesignName>ShoppingProject</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="orderDate" id="8B4E42C1-D2A0-0FB3-BE19-B348E49C3B4A">
+<createdBy>GGG</createdBy>
+<createdTime>2025-08-11 06:32:03 UTC</createdTime>
+<ownerDesignName>ShoppingProject</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="C650310E-1EAB-E847-C712-3072843DBF68" name="Orders_PK">
+<createdBy>GGG</createdBy>
+<createdTime>2025-08-11 06:32:03 UTC</createdTime>
+<ownerDesignName>ShoppingProject</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="78A88FA2-0AAF-9BC6-5E8F-EF7CC30A8C22"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6E1A96A6-84D3-E5E2-B07E-52F35B951934" name="Orders_User_FK">
+<createdBy>GGG</createdBy>
+<createdTime>2025-08-11 06:33:28 UTC</createdTime>
+<ownerDesignName>ShoppingProject</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="570A5D72-C757-FD1E-E02E-12A9CFE386C3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
