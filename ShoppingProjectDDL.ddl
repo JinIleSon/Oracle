@@ -350,8 +350,8 @@ select orderno,
        
 -- 문제10. 장보고 고객이 주문했던 모든 상품명을 `고객명`, `상품명`으로 조회하시오.
 -- 단 상품명은 중복 안됨, 상품명은 구분자 , 로 나열
-select u.name, 
-       listagg(distinct p.prodname, ',') within group(order by p.prodname)
+select u.name 고객명, 
+       listagg(distinct p.prodname, ',') within group(order by p.prodname) 상품명
        from orders o join "User" u
        on o.userid = u.userid
        join ordersitem i
@@ -360,3 +360,4 @@ select u.name,
        on i.prodno = p.prodno
        where u.name = '장보고'
        group by u.name;
+       
